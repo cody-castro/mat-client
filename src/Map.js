@@ -1,81 +1,65 @@
 import React, { Component } from 'react';
-import { Map, GoogleApiWrapper, InfoWindow, Marker } from 'google-maps-react';
+import mapboxgl from "mapbox-gl";
+// import MapboxGeocoder from "@mapbox/mapbox-gl-geocoder";
+import "@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css";
 
-const mapStyles = {
-  width: '100%',
-  height: '75%'
+
+
+mapboxgl.accessToken = 'slack'
+
+
+class Map extends Component {
+
+  state = {
+		lat: 40.7,
+		lng: -73.96,
+		zoom: 11,
+		pitch: 1.5, // pitch in degrees
+    bearing: 28.81, // bearing in degrees
+
+	};
+
+componentDidMount(){
+  const map = new mapboxgl.Map({
+    container: this.mapContainer, // HTML container id
+    style: 'mapbox://styles/nycody/ckg70msbu0bsq19ntsnzxhz22', // style URL
+    center: [this.state.lng, this.state.lat],
+    zoom: this.state.zoom, 
+    maxZoom: 18,
+    minZoom: 10,
+    pitch: this.state.pitch, 
+    bearing: this.state.bearing
+  })
+}
   
-};
-
-export class MapContainer extends Component {
-
-    state = {
-        showingInfoWindow: false,  // Hides or shows the InfoWindow
-        activeMarker: {},          // Shows the active marker upon click
-        selectedPlace: {}          // Shows the InfoWindow to the selected place upon a marker
-      };
 
 
-      onMarkerClick = (props, marker, e) =>
-      this.setState({
-        selectedPlace: props,
-        activeMarker: marker,
-        showingInfoWindow: true
-      });
-  
-    onClose = props => {
-      if (this.state.showingInfoWindow) {
-        this.setState({
-          showingInfoWindow: false,
-          activeMarker: null
-        });
-      }
-    };
 
-    
+
+
+
+
+
+
+
 
 
   render() {
-    return (
-<>
 
-      <Map
-        google={this.props.google}
-        zoom={10}    
-        style= {mapStyles}
-        initialCenter={
-          {
-            lat: 40.6894,
-            lng: -73.9003
-          }
-        }
-        
-      ><Marker
-      onClick={this.onMarkerClick}
-    //   name={`Hello World`}
-    />
-    <InfoWindow
-      marker={this.state.activeMarker}
-      visible={this.state.showingInfoWindow}
-      onClose={this.onClose}
-    >
+    return (
+    <>
       <div>
-        <h4>
-            This Place
-        </h4>
-        <ul>
-            <li>Is Restaraunt</li>
-            <li>Has Steps</li>
-        </ul>
-            <button>Write Review</button>
+        <div ref={el => this.mapContainer = el} className="mapContainer" />
       </div>
-    </InfoWindow>
-    </Map>
     </>
-    );
+      )
   }
+
+
+
+
+
 }
 
-export default GoogleApiWrapper({
-  apiKey: ''
-})(MapContainer);
+export default Map 
+

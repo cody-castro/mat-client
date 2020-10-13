@@ -5,9 +5,10 @@ const link = {
   width: '100px',
   padding: '12px',
   margin: '0 6px 6px',
-  background: 'blue',
+  background: 'black',
   textDecoration: 'none',
   color: 'white',
+  borderRadius: '15px'
 }
  
 class NavBar extends React.Component {
@@ -22,13 +23,13 @@ class NavBar extends React.Component {
           style={link}
           /* add prop for activeStyle */
           activeStyle={{
-            background: 'darkblue'
+            background: 'darkgreen'
           }}
         >Home</NavLink>
 
-        <NavLink to="/login" exact style={link} activeStyle={{ background: 'darkblue' }}>Login</NavLink>
-        <NavLink to="/signup" exact style={link} activeStyle={{  background: 'darkblue' }}>Signup</NavLink>
-        <NavLink to="/profile" exact style={link} activeStyle={{  background: 'darkblue' }}>Profile</NavLink>
+        <NavLink to="/login" exact style={link} activeStyle={{ background: 'darkgreen' }}>Login</NavLink>
+        <NavLink to="/signup" exact style={link} activeStyle={{  background: 'darkgreen' }}>Signup</NavLink>
+        <NavLink to="/profile" exact style={link} activeStyle={{  background: 'darkgreen' }}>Profile</NavLink>
       </div>
     )
   }
