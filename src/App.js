@@ -5,6 +5,7 @@ import Map from './Map'
 import NavBar from './NavBar'
 import LoginPage from './LoginPage'
 import SignupPage from './SignupPage'
+import ReviewPage from './ReviewPage'
 import ProfilePage from './ProfilePage'
 import {
   BrowserRouter as Router,
@@ -25,6 +26,7 @@ class App extends React.Component {
           <Route exact path="/map" component={Map} />
           <Route exact path="/signup" component={SignupPage} />
           <Route exact path="/profile" component={ProfilePage} />
+          <Route path="/review/" component={ReviewPage} />
         </div>
       </Router>
     );

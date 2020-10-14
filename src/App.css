@@ -8,3 +8,8 @@
     z-index: -3;
 }
 
+
+
+.mapboxgl-ctrl-geocoder--input{
+	width: 350px;
+}
