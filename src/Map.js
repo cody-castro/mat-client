@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import mapboxgl from "mapbox-gl";
 import MapboxGeocoder from "@mapbox/mapbox-gl-geocoder";
 import "@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css";
@@ -10,7 +10,7 @@ import { NavLink } from 'react-router-dom';
 mapboxgl.accessToken = 'slack'
 
 
-class Map extends Component {
+class Map extends React.Component {
 
   state = {
 		lat: 40.7,
@@ -35,7 +35,7 @@ class Map extends Component {
   // }
   
   
-  componentDidMount(){
+componentDidMount() {
     const map = new mapboxgl.Map({
       container: this.mapContainer, // HTML container id
       style: 'mapbox://styles/nycody/ckg70msbu0bsq19ntsnzxhz22/draft', // style URL + THIS IS A DRAFT NEEDS TO BE UPDATED!
@@ -74,7 +74,7 @@ map.on('click', function(e) {
   const popup = new mapboxgl.Popup({ offset: [0, -15] })
     .setLngLat(feature.geometry.coordinates)
     .setHTML(
-      writeReview(feature) + `<a href="http://localhost:3000/review"><button onClick="">Review It!</button></a>`
+      writeReview(feature) + `<a href="http://localhost:3001/review/"><button onClick="">Review It!</button></a>`
       )
     .addTo(map)
 });
@@ -88,7 +88,7 @@ map.on('click', function(e) {
  + feature.properties.name + 
  '</strong> <p> Lines: ' 
  + feature.properties.line + 
- '</p>'
+ '</p>' 
  )
 }
 

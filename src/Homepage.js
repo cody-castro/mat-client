@@ -19,12 +19,12 @@ function Homepage(){
         .catch(error => console.log('error', error));
 
     return(    
-        <>
+        <div className="homepage">
             <WelcomeCard />
             <MapCard />
             <ReviewCard />
             <Footer />
-        </>
+        </div>
     )
 }
 

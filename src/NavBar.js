@@ -8,13 +8,13 @@ const link = {
   background: 'black',
   textDecoration: 'none',
   color: 'white',
-  borderRadius: '15px'
+  borderRadius: '15px',
 }
  
 class NavBar extends React.Component {
   render() {
     return (
-      <div>
+      <div id="navbar">
         <NavLink
           to="/"
           /* set exact so it knows to only set activeStyle when route is deeply equal to link */
