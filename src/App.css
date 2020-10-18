@@ -28,4 +28,7 @@
 	margin-top: 30px; /* Add a top margin to avoid content overlay */
 }
 
-
+.station-popup{
+	height: 50px;
+	width: 50px
+}
