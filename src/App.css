@@ -47,4 +47,5 @@
   #review{
 	  background-size: 20px;
 	  background-color: red;
+	  z-index: 30;
   }

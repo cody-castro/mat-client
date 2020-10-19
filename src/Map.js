@@ -57,7 +57,6 @@ function Map() {
     //   });
       
       
-      
       useEffect( ()=>{
         getData()
       }, [])
@@ -69,11 +68,11 @@ function Map() {
 
       function popupHandler(e){
         setShowPopup(e)
-    console.log(e)
+        console.log(e)
   }
   
   function writeReview(e){
-    e.preventDefault(e)
+    e.preventDefault()
     console.log("yeeee")
   }
   

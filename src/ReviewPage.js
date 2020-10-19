@@ -3,41 +3,50 @@ import React from 'react'
 
 class ReviewPage extends React.Component {
 
-
       state = {
-        userInput: "" 
+        userReview: "" ,
+        userRating: 0,
       }
 
+      changeHandler = (e) =>{
+        e.preventDefault()
+        this.setState({
+          ...this.state,
+          [e.target.name]: e.target.value
+        });
+      }
 
-    //   changeHandler = (e) =>{
-    //       this.setState({ userInput: e.target.value })
-    //   }
+      
 
-
-    //   submitHandler = (e) =>{
-    //       e.preventDefault()
-    //       fetch('http://localhost:3000/ratings/', {
-    //           method: "POST",
-    //           headers: {
-    //             "Content-Type": "application/json",
-    //              accept: "application/json"
-    //       },
-    //           body: JSON.stringify({
-    //                 review: `${this.state.userInput}`
-    //       })
-    //     }).then(resp=>resp.json()).then(data => {console.log(data)})
-    //   }
+      submitHandler = (e) =>{
+          e.preventDefault()
+          fetch('http://localhost:3000/ratings/', {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                 accept: "application/json"
+          },
+              body: JSON.stringify({
+                    review: `${this.state.userReview}`
+          })
+        }).then(resp=>resp.json()).then(data => {console.log(data)})
+      }
 
     render = () =>{
 
         return(
             <div className="reviewpage">
+
             <div>
                 <h1>Leave a review for this station</h1>
             </div>
+
             <div>
-                <form onSubmit={this.submitHandler}>
-                    <input type="text" value= {this.state.userInput} placeholder="Write your review"></input>
+                <form onSubmit={()=>{this.submitHandler()}}>
+                    <input type="text" name="userReview" value= {this.state.userReview} onChange={(e)=>{this.changeHandler(e)}} placeholder="Write your review"></input>
+                    <br></br>
+                    <input type="number" name="userRating" value= {this.state.userRating} onChange={(e)=>{this.changeHandler(e)}} placeholder="Rate 1-5"></input>
+                    <br></br>
                     <input type="submit"></input>
                 </form>
             </div>

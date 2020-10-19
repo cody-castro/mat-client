@@ -1,5 +1,5 @@
 import React from 'react'
-import "./reviewCard.sass";
+// import "./reviewCard.sass";
 
 
 function ReviewCard(){
