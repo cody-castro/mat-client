@@ -1,6 +1,6 @@
 import React from "react";
 import "./Modal.scss";
-
+var fs = require("fs")
 
  class Modal extends React.Component {
   onClose = e => {

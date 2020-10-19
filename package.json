@@ -7,9 +7,7 @@
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
-    "bootstrap": "^4.5.2",
     "dotenv": "^8.2.0",
-    "google-maps-react": "^2.0.6",
     "mapbox-gl": "^1.12.0",
     "node-sass": "^4.14.1",
     "react": "^16.13.1",
@@ -17,7 +15,6 @@
     "react-map-gl": "^5.2.9",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.3",
-    "startbootstrap-scrolling-nav": "^4.2.2",
     "swr": "^0.3.5",
     "use-supercluster": "^0.2.9"
   },

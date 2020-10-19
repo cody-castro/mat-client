@@ -7,6 +7,7 @@ import ReactMapGL, {Layer, Source, Popup, Marker} from 'react-map-gl';
 import useSwr from "swr";
 import useSupercluster from "use-supercluster";
 import Modal from "./Modal"
+var fs = require("fs")
 
 const fetcher = (...args) => fetch(...args).then(response => response.json());
 
@@ -99,7 +100,8 @@ console.log(clusters);
     )
   }
 
-  
+
+
  return (
     <>
             <ReactMapGL 
@@ -110,7 +112,6 @@ console.log(clusters);
             // maxZoom={20}
             ref={mapRef}
             >
-            
 
               {clusters.map(cluster => {
                 const [longitude, latitude] = cluster.geometry.coordinates;
