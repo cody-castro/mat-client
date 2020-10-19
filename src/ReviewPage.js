@@ -16,7 +16,7 @@ class ReviewPage extends React.Component {
         });
       }
 
-      
+
 
       submitHandler = (e) =>{
           e.preventDefault()
@@ -27,7 +27,9 @@ class ReviewPage extends React.Component {
                  accept: "application/json"
           },
               body: JSON.stringify({
-                    review: `${this.state.userReview}`
+                    review: this.state.userReview,
+                    rating: this.state.userRating
+
           })
         }).then(resp=>resp.json()).then(data => {console.log(data)})
       }
