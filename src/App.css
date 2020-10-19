@@ -28,7 +28,23 @@
 	margin-top: 30px; /* Add a top margin to avoid content overlay */
 }
 
-.station-popup{
-	height: 50px;
-	width: 50px
-}
+
+.station-popup {
+	background: none;
+	border: none;
+  }
+  
+  .station.popup img {
+	width: 2px;
+  }
+
+  #popup{
+	  z-index: 6;
+	  width: 600px;
+	  /* background: red; */
+  }
+
+  #review{
+	  background-size: 20px;
+	  background-color: red;
+  }
