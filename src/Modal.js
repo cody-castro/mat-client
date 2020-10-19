@@ -1,24 +1,27 @@
-// Modal Image Gallery
-function onClick(element) {
-    document.getElementById("img01").src = element.src;
-    document.getElementById("modal01").style.display = "block";
-    var captionText = document.getElementById("caption");
-    captionText.innerHTML = element.alt;
-  }
-  
-  
-  // Toggle between showing and hiding the sidebar when clicking the menu icon
-  var mySidebar = document.getElementById("mySidebar");
-  
-  function w3_open() {
-    if (mySidebar.style.display === 'block') {
-      mySidebar.style.display = 'none';
-    } else {
-      mySidebar.style.display = 'block';
+import React from "react";
+import "./Modal.scss";
+
+
+ class Modal extends React.Component {
+  onClose = e => {
+    this.props.onClose && this.props.onClose(e);
+  };
+  render() {
+    if (!this.props.show) {
+      return null;
     }
+    return (
+      <div class="modal" id="modal">
+        <h2>Modal Window</h2>
+        <div class="content">{this.props.children}</div>
+        <div class="actions">
+          <button class="toggle-button" onClick={this.onClose}>
+            close
+          </button>
+        </div>
+      </div>
+    );
   }
-  
-  // Close the sidebar with the close button
-  function w3_close() {
-      mySidebar.style.display = "none";
-  }
+}
+
+export default Modal;

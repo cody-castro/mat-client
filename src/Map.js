@@ -6,6 +6,7 @@ import "@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css";
 import ReactMapGL, {Layer, Source, Popup, Marker} from 'react-map-gl';
 import useSwr from "swr";
 import useSupercluster from "use-supercluster";
+import Modal from "./Modal"
 
 const fetcher = (...args) => fetch(...args).then(response => response.json());
 

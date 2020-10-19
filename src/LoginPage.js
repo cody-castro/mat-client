@@ -1,10 +1,38 @@
-import React from 'react'
+import { render } from 'node-sass'
+import React, { Component } from 'react'
 import './LoginPage.css'
 
+const userUrl = "http://localhost:3000/users"
 
-function LoginPage() {
+class LoginPage extends Component {
+
+  state={
+    userName: "",
+    userPass: "",
+    userBio: "",
+  }
+
+addUser = () =>{
+  fetch(userUrl, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        accept: "application/json"
+  },
+      body: JSON.stringify({
+            whatsBeingChanged: "theNewThing"
+  })
+  }).then( resp=>resp.json() ).then( data => console.log(data) )
+}
 
 
+changeHandler = (e) =>{
+  const value= e.target.value 
+  this.setState({ ...this.state, [e.target.name]: value })
+}
+
+
+render(){
     return(
        <>
          <input type="radio" checked id="toggle--login" name="toggle" class="ghost" />
@@ -14,7 +42,7 @@ function LoginPage() {
         {/* <div className="logo framed"><strong>MAT Logo</strong></div> */}
 
          <form class="form form--login framed">
-    <input type="email" placeholder="Email" class="input input--top" />
+    <input type="text" placeholder="Email" class="input input--top" />
     <input type="password" placeholder="Password" class="input" />
     <input type="submit" value="Log in" class="input input--submit" />
     
@@ -23,23 +51,19 @@ function LoginPage() {
   <form class="form form--signup framed">
     <h2 class="text text--centered text--omega">Start reviewing accessibility in NYC now!</h2>
 
-    <input type="text" placeholder="Username" class="input input--top" />
-    <input type="password" placeholder="Password" class="input" />
-    <input type="text" placeholder="Bio" class="input" />
+    <input type="text" placeholder="Username" value={this.state.userName} onChange={this.changeHandler} name="userName" class="input input--top" />
+    <input type="password" placeholder="Password" value={this.state.userPass} name="userPass" class="input" />
+    <input type="text" placeholder="Bio" value={this.state.userBio} name="userBio" class="input" />
     <input type="submit" value="Sign up" class="input input--submit" />
     
     <label for="toggle--login" class="text text--small text--centered">Not new? <b>Log in</b></label>
   </form>
-  <div class="legal">
-    <a class="text text--small text--border-right" href="javascript:;">Terms</a>
-    <a class="text text--small text--border-right" href="javascript:;">Privacy</a>
-    <a class="text text--small" href="javascript:;">Password help</a>
-  </div>
 
 
   <div class="fullscreen-bg"></div>
        </>
     )
+}
 }
 
 export default LoginPage;
