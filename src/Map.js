@@ -58,10 +58,12 @@ function Map() {
         options: { radius: 100, maxZoom: 45 }
       });
       
-      console.log(clusters)
-      // useEffect( ()=>{
-      //   getData()
-      // }, [])
+
+      
+      useEffect( ()=>{
+        getData()
+      }, [])
+
       
       function closePopup() {
         setShowPopup(null)
@@ -70,13 +72,14 @@ function Map() {
 
       function popupHandler(e){
         setShowPopup(e)
-    // console.log(e)
+
+        console.log(e)
   }
   
   function writeReview(e){
-    e.preventDefault(e)
-    // console.log("yeeee")
-  }
+    e.preventDefault()
+    console.log("yeeee")
+
 
 console.log(clusters);
   

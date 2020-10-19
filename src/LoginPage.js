@@ -2,8 +2,41 @@ import React from 'react'
 import './LoginPage.css'
 
 
-function LoginPage() {
 
+
+class LoginPage extends React.Component {
+
+// state = {
+//   userName: "",
+//   userPass: "",
+//   userBio: "",
+// }
+
+// changeHandler = (e) =>{
+//   // e.preventDefault()
+//   this.setState({
+//     ...this.state,
+//     [e.target.name]: e.target.value
+//   });
+// }
+
+// signUp = () =>{
+//   fetch('http://localhost:3000/users/', {
+//       method: "POST",
+//       headers: {
+//         "Content-Type": "application/json",
+//          accept: "application/json"
+//   },
+//       body: JSON.stringify({
+//             whatsBeingChanged: theNewThing
+//   })
+//   }).then(resp=>resp.json()).then(data => functionYouWant(data))
+// }
+
+
+
+
+  render() {
 
     return(
        <>
@@ -17,29 +50,27 @@ function LoginPage() {
     <input type="email" placeholder="Email" class="input input--top" />
     <input type="password" placeholder="Password" class="input" />
     <input type="submit" value="Log in" class="input input--submit" />
+     <a href="http://localhost:3001/signup/" >New? Sign up</a>
     
-    <label for="toggle--signup" class="text text--small text--centered">New? <b>Sign up</b></label>
   </form>
-  <form class="form form--signup framed">
+
+  {/* <form class="form form--signup framed">
     <h2 class="text text--centered text--omega">Start reviewing accessibility in NYC now!</h2>
 
-    <input type="text" placeholder="Username" class="input input--top" />
-    <input type="password" placeholder="Password" class="input" />
-    <input type="text" placeholder="Bio" class="input" />
+    <input type="text" placeholder="Username" value={this.state.userValue} class="input input--top" onChange={(e)=>{this.changeHandler(e)}} name="userValue" />
+    <input type="password" placeholder="Password"  value={this.state.userPass} class="input" onChange={(e)=>{this.changeHandler(e)}} name="userPass" />
+    <input type="text" placeholder="Bio"  value={this.state.userBio} class="input" onChange={(e)=>{this.changeHandler(e)}} name="userBio" />
     <input type="submit" value="Sign up" class="input input--submit" />
     
     <label for="toggle--login" class="text text--small text--centered">Not new? <b>Log in</b></label>
-  </form>
-  <div class="legal">
-    <a class="text text--small text--border-right" href="javascript:;">Terms</a>
-    <a class="text text--small text--border-right" href="javascript:;">Privacy</a>
-    <a class="text text--small" href="javascript:;">Password help</a>
-  </div>
+  </form> */}
+
 
 
   <div class="fullscreen-bg"></div>
        </>
     )
+  }
 }
 
 export default LoginPage;

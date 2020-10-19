@@ -16,6 +16,8 @@ class ReviewPage extends React.Component {
         });
       }
 
+
+
       submitHandler = (e) =>{
           e.preventDefault()
           fetch('http://localhost:3000/ratings/', {
@@ -27,6 +29,7 @@ class ReviewPage extends React.Component {
               body: JSON.stringify({
                     review: this.state.userReview,
                     rating: this.state.userRating
+
           })
         }).then(resp=>resp.json()).then(data => {console.log(data)})
       }

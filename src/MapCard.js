@@ -1,5 +1,5 @@
 import React from 'react'
-import "./mapCard.sass";
+// import "./mapCard.sass";
 
 
 function MapCard(){
