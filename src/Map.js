@@ -4,10 +4,10 @@ import React, {useState, useRef, Component, useEffect} from 'react';
 import "@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css";
 // import { NavLink } from 'react-router-dom';
 import ReactMapGL, {Layer, Source, Popup, Marker} from 'react-map-gl';
-// import useSwr from "swr";
+import useSwr from "swr";
 import useSupercluster from "use-supercluster";
 
-
+const fetcher = (...args) => fetch(...args).then(response => response.json());
 
 
 function Map() {
@@ -21,23 +21,25 @@ function Map() {
     pitch: 1.5, // pitch in degrees
     bearing: 28.81, // bearing in degrees
   })
+
+  let mapRef = useRef();
   
-  
-  const mapRef = useRef();
-  
-  const [stations, setStations] = useState([])
+  // const [stations, setStations] = useState([])
   
   const [popups, setShowPopup] = useState(null)
   
   const stationDataUrl = "http://localhost:3000/locations/"
   
+  const { data, error } = useSwr(stationDataUrl, { fetcher });
+  const stations = data && !error ? data : [];
 
-    // const bounds = mapRef.current ? mapRef.current.getMap().getBounds().getArray().flat() : null;
+    const bounds = mapRef.current ? mapRef.current.getMap().getBounds().toArray().flat() : null;
 
+    console.log(mapRef, mapRef.current);
 
-  function getData() {
-      fetch(stationDataUrl).then(resp => resp.json()).then(data => setStations(data) )
-    }
+  // function getData() {
+  //     fetch(stationDataUrl).then(resp => resp.json()).then(data => setStations(data) )
+  //   }
 
     const points = stations.map(station => ({
     type: "Feature",
@@ -49,17 +51,19 @@ function Map() {
         parseFloat(station.coordinates.y)]}
       }))
       
-    // const { clusters, supercluster } = useSupercluster({
-    //     points,
-    //     bounds,
-    //     zoom: viewport.zoom,
-    //     options: { radius: 75, maxZoom: 20 }
-    //   });
+    const { clusters, supercluster } = useSupercluster({
+        points,
+        bounds,
+        zoom: viewport.zoom,
+        options: { radius: 100, maxZoom: 45 }
+      });
       
+
       
       useEffect( ()=>{
         getData()
       }, [])
+
       
       function closePopup() {
         setShowPopup(null)
@@ -68,13 +72,16 @@ function Map() {
 
       function popupHandler(e){
         setShowPopup(e)
+
         console.log(e)
   }
   
   function writeReview(e){
     e.preventDefault()
     console.log("yeeee")
-  }
+
+
+console.log(clusters);
   
   function popupStuff(){
     return(
@@ -95,7 +102,6 @@ function Map() {
   }
 
   
-  
  return (
     <>
             <ReactMapGL 
@@ -103,34 +109,48 @@ function Map() {
             onViewportChange={newViewport => {setViewport({ ...newViewport })}} 
             mapStyle="mapbox://styles/nycody/ckgcysc6u4htx19p7l9z0g4a1/draft"  
             mapboxApiAccessToken="pk.eyJ1Ijoibnljb2R5IiwiYSI6ImNrZmcxZWFuejAzNWEydHIyMmw5eGIxaWwifQ.7p4RHp9R5RXRDe6YyktAnQ"
-            maxZoom={20}
+            // maxZoom={20}
             ref={mapRef}
             >
+            
 
-              {popups !== null ? (
+              {clusters.map(cluster => {
+                const [longitude, latitude] = cluster.geometry.coordinates;
+                const {cluster: isCluster, point_count: pointCount} = cluster.properties;
+
+                if (isCluster){
+                  return (
+                    <Marker key={cluster.id} latitude={latitude} longitude={longitude}>
+                      <div className="cluster-marker">
+                        {pointCount}
+                      </div>
+                    </Marker>
+                  )
+                }
+
+                return (
+                  <Marker key={cluster.properties.stationId} latitude={latitude} longitude={longitude} cluster={true}
+                  clusterMinZoom={10}
+                  // clusterRadius={.1}
+                  >
+                    <img height="20" width="relative" src="http://maps.google.com/mapfiles/ms/micons/rail.png" alt="station icon" onClick= { () => { popupHandler(latitude, longitude)} }></img>
+                    
+                  </Marker>
+                )
+              }
+              )}
+
+{popups !== null ? (
                     <Popup
-                      zoom="20"
                       latitude={parseFloat(popups.coordinates.y)}
                       longitude={parseFloat(popups.coordinates.x)}
-                      onClose={()=>{closePopup()}}
+                      // onClose={()=>{closePopup()}}
+                      closeButton="true"
                       id="popup"
                     >
                       {popupStuff()}
                     </Popup>
                     ) : null}
-            
-
-              {stations.map(station => (
-                <Marker id={station.id} latitude={station.coordinates.y} longitude={station.coordinates.x} cluster={true}
-                clusterMaxZoom={14}
-                clusterRadius={2}
-                ref={mapRef}>
-
-                  <img height="5" width="relative" src="http://maps.google.com/mapfiles/ms/micons/rail.png" alt="station icon" onClick= {e => { popupHandler(station)}}></img>
-                  
-                </Marker>
-
-              ))}
             </ReactMapGL>
           </>
           )
