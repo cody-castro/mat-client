@@ -88,10 +88,7 @@ html, body {
       padding-right: 0.75rem;
     }
   
-  .legal {
-    position: absolute;
-    bottom: 1.125rem; left: 1.125rem;
-  }
+
   
   .photo-cred {
     position: absolute;
@@ -105,8 +102,15 @@ html, body {
     background: url(https://i.pinimg.com/originals/73/b8/3e/73b83ea2216243d4e0c00955d6cb9922.png) center;
     background-size: cover;
   }
+
+  .signup-link{
+    margin-left: 50px;
+  }
   
   #toggle--login:checked ~ .form--signup { left:200%; visibility:hidden; }
   #toggle--signup:checked ~ .form--login { left:-100%; visibility:hidden; }
   
   @media (height:300px){.legal,.photo-cred{display:none}}
+
+
+  

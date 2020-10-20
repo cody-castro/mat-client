@@ -1,0 +1,19 @@
+.fullscreen-bg {
+    position: fixed;
+    z-index: -1;
+    top:0; right:0; bottom:0; left:0;
+    background: url(https://i.pinimg.com/originals/73/b8/3e/73b83ea2216243d4e0c00955d6cb9922.png) center;
+    background-size: cover;
+  }
+
+  .framed {
+    position: absolute;
+    top: 50%; left: 50%;
+    width: 15rem;
+    margin-left: -7.5rem;
+  }
+  
+  .logo {
+    margin-top: -9em;
+    cursor: default;
+  }

@@ -43,14 +43,14 @@ class LoginPage extends React.Component {
          <input type="radio" checked id="toggle--login" name="toggle" class="ghost" />
          <input type="radio" id="toggle--signup" name="toggle" class="ghost" />
 
-         <img class="logo framed" src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/MTA_NYC_logo.svg/1200px-MTA_NYC_logo.svg.png" alt="MAT logo" />
+         <img class="logo framed" src="https://i.imgur.com/uI3sAT1.png" alt="MAT logo" />
         {/* <div className="logo framed"><strong>MAT Logo</strong></div> */}
 
          <form class="form form--login framed">
     <input type="email" placeholder="Email" class="input input--top" />
     <input type="password" placeholder="Password" class="input" />
     <input type="submit" value="Log in" class="input input--submit" />
-     <a href="http://localhost:3001/signup/" >New? Sign up</a>
+     <a className="signup-link" href="http://localhost:3001/signup/" >New? Sign up</a>
     
   </form>
 
