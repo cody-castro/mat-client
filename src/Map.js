@@ -1,13 +1,13 @@
-import React, {useState, useRef, Component, useEffect} from 'react';
+// import useSupercluster from "use-supercluster";
 // import mapboxgl from "mapbox-gl";
 // import MapboxGeocoder from "@mapbox/mapbox-gl-geocoder";
-import "@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css";
 // import { NavLink } from 'react-router-dom';
-import ReactMapGL, {Layer, Source, Popup, Marker} from 'react-map-gl';
+import React, {useState, useRef} from 'react';
+import "@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css";
+import ReactMapGL, { Popup, Marker} from 'react-map-gl';
 import useSwr from "swr";
-import useSupercluster from "use-supercluster";
 import './Map.css'
-import {Link, Route} from 'react-router-dom'
+// import {Link, Route} from 'react-router-dom'
 import ReviewPage from './ReviewPage'
 
 const fetcher = (...args) => fetch(...args).then(response => response.json());
@@ -35,26 +35,25 @@ function Map() {
 
   const [reviewPage, setReviewPage] = useState(false)
 
-  const [review, setReview] = useState(null)
+  // const [review, setReview] = useState(null)
   const [clickedStation, setClickedStation] = useState({})
 
-  const [stationReviews, setStationReviews] = useState([])
+  // const [stationReviews, setStationReviews] = useState([])
 
-    // const bounds = mapRef.current ? mapRef.current.getMap().getBounds().toArray().flat() : null;
       
-      function closePopup() {
-        setShowPopup(null)
-      };
+      // function closePopup() {
+      //   setShowPopup(null)
+      // };
       
 
       function popupHandler(stationObj){
         setShowPopup(stationObj)
   }
   
-  function writeReview(e){
-    e.preventDefault()
-    console.log("yeeee")
-  }
+  // function writeReview(e){
+  //   e.preventDefault()
+  //   console.log("yeeee")
+  // }
   
   // function popupStuff(){
   //   return( )
@@ -75,7 +74,7 @@ function Map() {
         body: JSON.stringify(reviewObj)
         }).then(resp=>resp.json()).then(data => {
         console.log(data)
-        if (data != undefined){ 
+        if (data !== undefined){ 
           const newPopups = popups
           newPopups.ratings = [...newPopups.ratings, data]
           setShowPopup(newPopups)

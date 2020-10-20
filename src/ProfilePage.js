@@ -28,22 +28,22 @@ changeHandler = (e) =>{
 
 submitHandler = (e) =>{
 	e.preventDefault()
-	console.log("Hello worldt")
 
-// 	fetch(`http://localhost:3000/users/1`, {
-// 	method: 'PATCH',
-// 	headers: {
-// 		"Content-Type": "application/json",
-// 		"Accepts": "application/json"
-// 	},
-// 	body: JSON.stringify({
-// 		name: this.state.editName,
-// 		bio: this.state.editBio
-// 	})
-// 	.then(response => response.json())
-// 	.then(data => console.log(data))
-// })
+	fetch(`http://localhost:3000/users/1`, {
+	method: 'PATCH',
+	headers: {
+		"Content-Type": "application/json",
+		"Accepts": "application/json"
+	},
+	body: JSON.stringify({
+		name: this.state.editName,
+		bio: this.state.editBio
+	})
+}).then(response => response.json()).then(data => { 
+	this.setState(()=>({ ...this.state, userName: data.name, userBio: data.bio, editButtonClicked: !this.state.editButtonClicked }))
+})
 }
+
 
 
 render(){
