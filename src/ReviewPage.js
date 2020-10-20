@@ -16,24 +16,16 @@ class ReviewPage extends React.Component {
         });
       }
 
-
-      submitHandler = (e) =>{
-          e.preventDefault()
-          fetch('http://localhost:3000/ratings/', {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-                 accept: "application/json"
-          },
-              body: JSON.stringify({
-                    review: this.state.userReview,
-                    rating: parseInt(this.state.userRating),
-                    user_id: 244,
-                    location_id: 9640
-
-          })
-        }).then(resp=>resp.json()).then(data => {console.log(data)})
-      }
+submitForm = (e) =>{
+    e.preventDefault()
+    this.props.submitHandler({
+        review: this.state.userReview,
+        rating: parseInt(this.state.userRating),
+        user_id: 1,
+        location_id: this.props.stationId
+    })
+}
+     
 
     render = () =>{
 
@@ -45,12 +37,12 @@ class ReviewPage extends React.Component {
             </div>
 
             <div>
-                <form onSubmit={(e)=>{this.submitHandler(e)}}>
+                <form onSubmit={(e)=>{(this.submitForm(e))}}>
                     <input type="text" name="userReview" value= {this.state.userReview} onChange={(e)=>{this.changeHandler(e)}} placeholder="Write your review"></input>
                     <br></br>
                     <input type="number" name="userRating" value= {this.state.userRating} onChange={(e)=>{this.changeHandler(e)}} placeholder="Rate 1-5"></input>
                     <br></br>
-                    <input type="submit"></input>
+                    <input type="submit" ></input>
                 </form>
             </div>
             </div>

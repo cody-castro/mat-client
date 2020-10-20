@@ -6,17 +6,20 @@ import "@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css";
 import ReactMapGL, {Layer, Source, Popup, Marker} from 'react-map-gl';
 import useSwr from "swr";
 import useSupercluster from "use-supercluster";
+import './Map.css'
+import {Link, Route} from 'react-router-dom'
+import ReviewPage from './ReviewPage'
 
 const fetcher = (...args) => fetch(...args).then(response => response.json());
 
 function Map() {
   
   const [viewport, setViewport] = useState( {
-    latitude: 40.709244800046726,
-    longitude: -73.84787727630345,
+    latitude: 40.69813713083944,
+    longitude: -73.9566481146791,
+    zoom: 12.577032850735295,
     width: "100vw",
     height: "100vh",
-    zoom: 9.503816871606016,
     pitch: 1.5, // pitch in degrees
     bearing: 28.81, // bearing in degrees
   })
@@ -30,6 +33,13 @@ function Map() {
   const { data, error } = useSwr(stationDataUrl, { fetcher });
   const stations = data && !error ? data : [];
 
+  const [reviewPage, setReviewPage] = useState(false)
+
+  const [review, setReview] = useState(null)
+  const [clickedStation, setClickedStation] = useState({})
+
+  const [stationReviews, setStationReviews] = useState([])
+
     // const bounds = mapRef.current ? mapRef.current.getMap().getBounds().toArray().flat() : null;
       
       function closePopup() {
@@ -37,8 +47,8 @@ function Map() {
       };
       
 
-      function popupHandler(e){
-        setShowPopup(e)
+      function popupHandler(stationObj){
+        setShowPopup(stationObj)
   }
   
   function writeReview(e){
@@ -50,9 +60,35 @@ function Map() {
   //   return( )
   // }
 
-  
+  function getReviews(){
+    // setStationReviews(popups.ratings.map( r => r.review ))
+     return popups.ratings.map(r => <li>{r.review}</li>)
+  }
+
+  function submitHandler(reviewObj){
+    fetch('http://localhost:3000/ratings/', {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+           accept: "application/json"
+    },
+        body: JSON.stringify(reviewObj)
+        }).then(resp=>resp.json()).then(data => {
+        console.log(data)
+        if (data != undefined){ 
+          const newPopups = popups
+          newPopups.ratings = [...newPopups.ratings, data]
+          setShowPopup(newPopups)
+          setReviewPage(false) 
+        }
+      })
+}
+
+
+
  return (
           <>
+          {reviewPage ? <ReviewPage stationId= {clickedStation} submitHandler={submitHandler} /> : 
             <ReactMapGL 
             {...viewport} 
             onViewportChange={newViewport => {setViewport({ ...newViewport })}} 
@@ -71,15 +107,14 @@ function Map() {
                     >
                        <ul>
                         <li>
-                          {popups.name}
+                          Location: {popups.name}
                         </li>
                         <li>
-                          {popups.line}
+                          Subway Line: {popups.line}
                         </li>
+                          {getReviews()}
                         <li>
-                          <button id="review" onClick={(e) =>{
-                            writeReview(e)}}>Review This Station
-                            </button>
+                          <button onClick= {()=>{ setClickedStation(popups.id); setReviewPage(true)} }> Leave Review </button>
                         </li>
                       </ul>
 
@@ -94,14 +129,18 @@ function Map() {
                 clusterRadius={2}
                 ref={mapRef}>
 
-                  <img height="5" width="relative" src="http://maps.google.com/mapfiles/ms/micons/rail.png" alt="station icon" onClick= {e => { popupHandler(station)}}></img>
+                  <img height="15" width="relative" src="http://maps.google.com/mapfiles/ms/micons/rail.png" alt="station icon" onClick= {e => { popupHandler(station)}}></img>
                   
                 </Marker>
 
               ))}
 
             </ReactMapGL>
+          }
+
+            {/* <Route path="/review" component={ReviewPage} /> */}
           </>
+
   )
 
 }
