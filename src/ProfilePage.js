@@ -15,7 +15,7 @@ state={
 componentDidMount(){
 	let userId = localStorage.getItem("currentUser")
 	fetch("http://localhost:3000/users/" + userId).then(resp => resp.json()).then(data => {
-		this.setState((previousState)=>({ userName: data.name, userBio: data.bio, reviews: data.ratings[0] }))
+		this.setState((previousState)=>({ userName: data.name, userBio: data.bio, reviews: data.ratings }))
 
 	})
 }
@@ -48,9 +48,14 @@ submitHandler = (e) =>{
 }
 
 getReviews = ()=> {
-	// console.log(this.state.reviews)
-	// let reviewArray = this.state.reviews
-    //  return reviewArray.map(r => <li>{r}</li>)
+	console.log(this.state.reviews)
+	let reviewArray = this.state.reviews
+	 return reviewArray.map(
+		 r => 
+	<li>{r.review}
+		<button style={{color: "red", background: "transparent", border:"transparent"}} alt="delete review" onClick={()=>this.deleteReview(r.id)}> x</button>
+	</li>
+	)
   }
 
 
@@ -61,9 +66,15 @@ deleteReview = (reviewId)=>{
 			"Content-Type": "application/json",
 			Accept: "application/json",
 		}
-	})
+	}).then(resp => resp.json()).then(data =>{
+		this.setState({ reviews: data })
+	 })
 }
 
+logOut = () =>{
+	return (localStorage.removeItem("currentUser"),
+	 window.alert("Thanks for using My Accessible Transit!"))
+}
 
 render(){
 	if (this.state.editButtonClicked === true){
@@ -74,6 +85,7 @@ render(){
 				<div className= "card-container">
 
 				<span className="pro">Commuter Profile</span>
+				
 
 				<img className="round" src="https://i.imgur.com/uI3sAT1.png" height="150px" alt="user" />
 
@@ -104,6 +116,7 @@ render(){
 				<div className= "card-container">
 
 				<span className="pro">Commuter Profile</span>
+				<button className="logout" onClick={this.logOut}> Log Out </button>
 
 				<img class="round" src="https://i.imgur.com/uI3sAT1.png" height="150px" alt="user" />
 				<h2>{this.state.userName}</h2>
@@ -117,10 +130,9 @@ render(){
 				<div class="skills">
 					<h6>Reviews</h6>
 					<ul>
-					{/* { this.getReviews() } */}
+					{ this.getReviews() }
 						<li>
-							{this.state.reviews.review}
-			<button style={{color: "red", background: "transparent", border:"transparent"}} alt="delete review"  /*({this.state.reviews.review.id})=>{this.deleteReview(this.state.reviews.review.id)}}*/>x</button>
+							{/* {this.state.reviews.review} */}
 						</li>
 					</ul>
 				</div>

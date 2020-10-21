@@ -60,9 +60,42 @@ function Map() {
   // }
 
   function getReviews(){
-    // setStationReviews(popups.ratings.map( r => r.review ))
-     return popups.ratings.map(r => <li>{r.review}</li>)
+  return popups.ratings.map(r => {
+    return <ul><li>"{r.review}"</li> <li>- {timeSince(new Date(r.created_at))} ago </li></ul>
+})
   }
+  
+
+
+  function timeSince(date) {
+console.log(new Date(date))
+    var seconds = Math.floor((new Date() - date) / 1000);
+    var interval = seconds / 31536000;
+  
+    if (interval > 1) {
+      return Math.floor(interval) + " years";
+    }
+    interval = seconds / 2592000;
+    if (interval > 1) {
+      return Math.floor(interval) + " months";
+    }
+    interval = seconds / 86400;
+    if (interval > 1) {
+      return Math.floor(interval) + " days";
+    }
+    interval = seconds / 3600;
+    if (interval > 1) {
+      return Math.floor(interval) + " hours";
+    }
+    interval = seconds / 60;
+    if (interval > 1) {
+      return Math.floor(interval) + " minutes";
+    }
+    return Math.floor(seconds) + " seconds";
+  }
+
+
+
 
   function submitHandler(reviewObj){
     fetch('http://localhost:3000/ratings/', {
