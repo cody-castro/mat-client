@@ -73,7 +73,20 @@ deleteReview = (reviewId)=>{
 
 logOut = () =>{
 	return (localStorage.removeItem("currentUser"),
-	 window.alert("Thanks for using My Accessible Transit!"))
+	 window.alert(`Thanks for using My Accessible Transit!`))
+}
+
+deleteProfile(){
+	let userId = localStorage.getItem("currentUser")
+	fetch('http://localhost:3000/users/' + userId, {
+		method: "DELETE",
+		headers: {
+			"Content-Type": "application/json",
+			Accept: "application/json",
+		}
+	}).then(resp => resp.json()).then(data =>{
+		window.alert( `Sad to see you go, ${data.name} ):`);
+	 })
 }
 
 render(){
@@ -122,11 +135,15 @@ render(){
 				<h2>{this.state.userName}</h2>
 				<h6>New York</h6>
 				<p>{this.state.userBio}</p>
-				<div class="buttons">
+				<div className="buttons">
 					<button className="primary" onClick={()=>{ this.setState(()=>({ editButtonClicked: true }))}} >
 						Edit Profile
 					</button>
+					<button className="delete" onClick={this.deleteProfile} >
+						Delete Profile
+					</button>
 				</div>
+				
 				<div class="skills">
 					<h6>Reviews</h6>
 					<ul>

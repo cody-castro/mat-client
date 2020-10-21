@@ -9,7 +9,7 @@ function WelcomeCard() {
 	    <div className="home-course">
 		    <div className="home-course-preview">
 			{/* <h6>Course</h6>  */}
-			    <h2>Welcome to My Accessible Tranist</h2>
+			    <h2>Welcome to My Accessible Transit</h2>
 			    <a href="#">some copy <i className="fas fa-chevron-right"></i></a>
 		    </div>
 		<div className="home-course-info">

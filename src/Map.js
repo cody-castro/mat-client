@@ -136,7 +136,7 @@ console.log(new Date(date))
                 clusterRadius={2}
                 ref={mapRef}>
 
-                  <img style={{zIndex: 30}} className="markers" height="15" width="relative" src="http://maps.google.com/mapfiles/ms/micons/rail.png" alt="station icon" onClick= {e => { popupHandler(station)}}></img>
+                  <img className="markers" height="25" width="relative" src="https://i.imgur.com/uI3sAT1.png" alt="station icon" onClick= {e => { popupHandler(station)}}></img>
                   
                 </Marker>
 
