@@ -22,7 +22,7 @@ function Homepage(){
 // getData()
 
     return(    
-        <div className="homepage">
+        <div className="homepage" >
             <WelcomeCard />
             <MapCard />
             <ReviewCard />

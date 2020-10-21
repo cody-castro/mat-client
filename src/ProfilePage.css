@@ -4,15 +4,17 @@
 	box-sizing: border-box;
 }
 
+.profile-page{
+	width: 100vw;
+}
+
 body {
 	background-color: ##A9A9A9;
 	font-family: Montserrat, sans-serif;
-	
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	flex-direction: column;
-
 	min-height: 100vh;
 	margin: 0;
 }
@@ -38,9 +40,10 @@ p {
 	color: #B3B8CD;
 	padding-top: 30px;
 	position: relative;
-	width: 800px;
+	width: 100vw;
 	max-width: 100%;
 	text-align: center;
+
 }
 
 .card-container .pro {
@@ -76,6 +79,22 @@ button.primary.ghost {
 	color: #02899C;
 }
 
+button.delete {
+	background-color: #f95341;
+	border: 1px solid #cb2803;
+	border-radius: 3px;
+	color: #231E39;
+	font-family: Montserrat, sans-serif;
+	font-weight: 500;
+	padding: 10px 25px;
+	margin-left: 20px;
+}
+
+button.delete.ghost {
+	background-color: transparent;
+	color: #02899C;
+}
+
 .skills {
 	background-color: #1F1A36;
 	text-align: left;
@@ -99,7 +118,7 @@ button.primary.ghost {
 }
 
 footer {
-    background-color: #222;
+    background-color: white;
     color: #fff;
     font-size: 14px;
     bottom: 0;
@@ -121,4 +140,22 @@ footer i {
 footer a {
     color: #3c97bf;
     text-decoration: none;
+}
+
+.background{
+	z-index: 990;
+
+}
+
+.logout{
+	color: #231E39;
+	background-color: red;
+	border-radius: 3px;
+	border: none;
+	font-size: 14px;
+	font-weight: bold;
+	padding: 3px 7px;
+	position: absolute;
+	top: 30px;
+	right: 30px;
 }

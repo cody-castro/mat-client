@@ -1,6 +1,11 @@
 import React from 'react'
 // import './App.css'
 import './SignupPage.css'
+import {
+  BrowserRouter as Router,
+  Route
+} from 'react-router-dom';
+import ProfilePage from './ProfilePage'
 
 class SignupPage extends React.Component {
 
@@ -18,7 +23,8 @@ class SignupPage extends React.Component {
         });
       }
       
-       signUp = () =>{
+  signUp = (e) =>{
+    e.preventDefault()
          fetch('http://localhost:3000/users/', {
             method: "POST",
             headers: {
@@ -30,16 +36,19 @@ class SignupPage extends React.Component {
                   password_digest: this.state.userPass,
                   bio: this.state.userBio
         })
-        }).then(resp=>resp.json()).then(data => console.log(data))
+        }).then(resp=>resp.json()).then(data => {
+          console.log(data);
+          localStorage.setItem( "currentUser", data.id ); 
+          })
       }
       
       
 render(){
 
-    return(
+  return(
         <div className="signuppage">
  <img class="logo framed" src="https://i.imgur.com/uI3sAT1.png" alt="MAT logo" />
-            <form onSubmit={()=>{this.signUp()}} class="form form--signup framed">
+            <form onSubmit={(e)=>{this.signUp(e)}} class="form form--signup framed">
                 <h2 class="text text--centered text--omega">Start reviewing accessibility in NYC now!</h2>
 
                 <input type="text" placeholder="Username" value={this.state.userName} class="input input--top" onChange={(e)=>{this.changeHandler(e)}} name="userName" />

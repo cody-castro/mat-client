@@ -1,23 +1,33 @@
 import React from 'react'
-// import "./mapCard.sass";
+import "./MapCard.css"
 
+function MapCard() {
 
-function MapCard(){
 
     return(
-        <div class="cardContainer inactive">
-  <div class="card">
-    <div class="side front">
-      <div class="img img1"></div>
-      <div class="info">
-        <h2>Map card</h2>
-        <p>A stand-on with an exceptional compact stance. Great for tight spaces and trailering.</p>
-      </div>
-    </div>
+    <div className="map-courses-container">
+	    <div className="map-course">
+		    <div className="map-course-preview">
+			{/* <h6>Course</h6>  */}
+			    <h2>Check out our map and start reviewing subway stations</h2>
+			    <a href="#"> <i className="fas fa-chevron-right"></i></a>
+		    </div>
+		<div className="map-course-info">
+			<div className="map-progress-container">
+				<div className="map-progress"></div>
+				<span className="map-progress-text">
+				
+				</span>
+			</div>
+			<h2>some copy about subway accessibility and how the MTA is neglects upkeep</h2>
+			<button className="map-btn"><a href="http://localhost:3001/map">Continue</a></button>
+		</div>
+	</div>
 </div>
-</div>
-    )
-}
 
+
+    )
+
+}
 
 export default MapCard;

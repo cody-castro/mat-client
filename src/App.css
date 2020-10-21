@@ -15,19 +15,22 @@
 
 #navbar{
 	position: fixed;
-
 	/* width: 100vw; */
 	height: 40px;
 	/* overflow: hidden; */
   	background-color: rgb(0, 0, 0);
   	top: 0; /* Position the navbar at the top of the page */
-  	width: 100%; 
+  	width: 100vw; 
  	 z-index: 3;
 }
 
 /* .reviewPage, .signuppage, .loginpage, .homepage, .profilepage{
 	margin-top: 30px; /* Add a top margin to avoid content overlay */
 /* }  */
+
+.reviewpage{
+	width: 100vw;
+}
 
 
 .station-popup {
@@ -62,3 +65,14 @@
 	justify-content: center;
 	align-items: center;
   } */
+
+
+.footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: red;
+  color: white;
+  text-align: center;
+}

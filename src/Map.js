@@ -1,22 +1,25 @@
-import React, {useState, useRef, Component, useEffect} from 'react';
+// import useSupercluster from "use-supercluster";
 // import mapboxgl from "mapbox-gl";
 // import MapboxGeocoder from "@mapbox/mapbox-gl-geocoder";
-import "@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css";
 // import { NavLink } from 'react-router-dom';
-import ReactMapGL, {Layer, Source, Popup, Marker} from 'react-map-gl';
+import React, {useState, useRef} from 'react';
+import "@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css";
+import ReactMapGL, { Popup, Marker} from 'react-map-gl';
 import useSwr from "swr";
-import useSupercluster from "use-supercluster";
+import './Map.css'
+// import {Link, Route} from 'react-router-dom'
+import ReviewPage from './ReviewPage'
 
 const fetcher = (...args) => fetch(...args).then(response => response.json());
 
 function Map() {
   
   const [viewport, setViewport] = useState( {
-    latitude: 40.709244800046726,
-    longitude: -73.84787727630345,
+    latitude: 40.69813713083944,
+    longitude: -73.9566481146791,
+    zoom: 12.577032850735295,
     width: "100vw",
     height: "100vh",
-    zoom: 9.503816871606016,
     pitch: 1.5, // pitch in degrees
     bearing: 28.81, // bearing in degrees
   })
@@ -30,29 +33,94 @@ function Map() {
   const { data, error } = useSwr(stationDataUrl, { fetcher });
   const stations = data && !error ? data : [];
 
-    // const bounds = mapRef.current ? mapRef.current.getMap().getBounds().toArray().flat() : null;
+  const [reviewPage, setReviewPage] = useState(false)
+
+  // const [review, setReview] = useState(null)
+  const [clickedStation, setClickedStation] = useState({})
+
+  // const [stationReviews, setStationReviews] = useState([])
+
       
-      function closePopup() {
-        setShowPopup(null)
-      };
+      // function closePopup() {
+      //   setShowPopup(null)
+      // };
       
 
-      function popupHandler(e){
-        setShowPopup(e)
+      function popupHandler(stationObj){
+        setShowPopup(stationObj)
   }
   
-  function writeReview(e){
-    e.preventDefault()
-    console.log("yeeee")
-  }
+  // function writeReview(e){
+  //   e.preventDefault()
+  //   console.log("yeeee")
+  // }
   
   // function popupStuff(){
   //   return( )
   // }
 
+  function getReviews(){
+  return popups.ratings.map(r => {
+    return <ul><li>"{r.review}"</li> <li>- {timeSince(new Date(r.created_at))} ago </li></ul>
+})
+  }
   
+
+
+  function timeSince(date) {
+console.log(new Date(date))
+    var seconds = Math.floor((new Date() - date) / 1000);
+    var interval = seconds / 31536000;
+  
+    if (interval > 1) {
+      return Math.floor(interval) + " years";
+    }
+    interval = seconds / 2592000;
+    if (interval > 1) {
+      return Math.floor(interval) + " months";
+    }
+    interval = seconds / 86400;
+    if (interval > 1) {
+      return Math.floor(interval) + " days";
+    }
+    interval = seconds / 3600;
+    if (interval > 1) {
+      return Math.floor(interval) + " hours";
+    }
+    interval = seconds / 60;
+    if (interval > 1) {
+      return Math.floor(interval) + " minutes";
+    }
+    return Math.floor(seconds) + " seconds";
+  }
+
+
+
+
+  function submitHandler(reviewObj){
+    fetch('http://localhost:3000/ratings/', {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+           accept: "application/json"
+    },
+        body: JSON.stringify(reviewObj)
+        }).then(resp=>resp.json()).then(data => {
+        console.log(data)
+        if (data !== undefined){ 
+          const newPopups = popups
+          newPopups.ratings = [...newPopups.ratings, data]
+          setShowPopup(newPopups)
+          setReviewPage(false) 
+        }
+      })
+}
+
+
+
  return (
           <>
+          {reviewPage ? <ReviewPage stationId= {clickedStation} submitHandler={submitHandler} /> : 
             <ReactMapGL 
             {...viewport} 
             onViewportChange={newViewport => {setViewport({ ...newViewport })}} 
@@ -61,8 +129,22 @@ function Map() {
             // maxZoom={20}
             ref={mapRef}
             >
+
+{stations.map(station => (
+                <Marker id={station.id} latitude={parseFloat(station.coordinates.y)} longitude={parseFloat(station.coordinates.x)} cluster={true}
+                clusterMaxZoom={14}
+                clusterRadius={2}
+                ref={mapRef}>
+
+                  <img className="markers" height="25" width="relative" src="https://i.imgur.com/uI3sAT1.png" alt="station icon" onClick= {e => { popupHandler(station)}}></img>
+                  
+                </Marker>
+
+              ))}
+
+
               {popups !== null ? (
-                    <Popup
+                    <Popup 
                       latitude={parseFloat(popups.coordinates.y)}
                       longitude={parseFloat(popups.coordinates.x)}
                       // onClose={()=>{closePopup()}}
@@ -71,15 +153,14 @@ function Map() {
                     >
                        <ul>
                         <li>
-                          {popups.name}
+                          Location: {popups.name}
                         </li>
                         <li>
-                          {popups.line}
+                          Subway Line: {popups.line}
                         </li>
+                          {getReviews()}
                         <li>
-                          <button id="review" onClick={(e) =>{
-                            writeReview(e)}}>Review This Station
-                            </button>
+                          <button onClick= {()=>{ setClickedStation(popups.id); setReviewPage(true)} }> Leave Review </button>
                         </li>
                       </ul>
 
@@ -87,21 +168,14 @@ function Map() {
               ) : null}
 
 
-
-            {stations.map(station => (
-                <Marker id={station.id} latitude={parseFloat(station.coordinates.y)} longitude={parseFloat(station.coordinates.x)} cluster={true}
-                clusterMaxZoom={14}
-                clusterRadius={2}
-                ref={mapRef}>
-
-                  <img height="5" width="relative" src="http://maps.google.com/mapfiles/ms/micons/rail.png" alt="station icon" onClick= {e => { popupHandler(station)}}></img>
-                  
-                </Marker>
-
-              ))}
+           
 
             </ReactMapGL>
+          }
+
+            {/* <Route path="/review" component={ReviewPage} /> */}
           </>
+
   )
 
 }
