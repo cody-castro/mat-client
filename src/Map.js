@@ -96,8 +96,22 @@ function Map() {
             // maxZoom={20}
             ref={mapRef}
             >
+
+{stations.map(station => (
+                <Marker id={station.id} latitude={parseFloat(station.coordinates.y)} longitude={parseFloat(station.coordinates.x)} cluster={true}
+                clusterMaxZoom={14}
+                clusterRadius={2}
+                ref={mapRef}>
+
+                  <img style={{zIndex: 30}} className="markers" height="15" width="relative" src="http://maps.google.com/mapfiles/ms/micons/rail.png" alt="station icon" onClick= {e => { popupHandler(station)}}></img>
+                  
+                </Marker>
+
+              ))}
+
+
               {popups !== null ? (
-                    <Popup
+                    <Popup 
                       latitude={parseFloat(popups.coordinates.y)}
                       longitude={parseFloat(popups.coordinates.x)}
                       // onClose={()=>{closePopup()}}
@@ -121,18 +135,7 @@ function Map() {
               ) : null}
 
 
-
-            {stations.map(station => (
-                <Marker id={station.id} latitude={parseFloat(station.coordinates.y)} longitude={parseFloat(station.coordinates.x)} cluster={true}
-                clusterMaxZoom={14}
-                clusterRadius={2}
-                ref={mapRef}>
-
-                  <img height="15" width="relative" src="http://maps.google.com/mapfiles/ms/micons/rail.png" alt="station icon" onClick= {e => { popupHandler(station)}}></img>
-                  
-                </Marker>
-
-              ))}
+           
 
             </ReactMapGL>
           }

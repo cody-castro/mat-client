@@ -19,6 +19,7 @@ class SignupPage extends React.Component {
       }
       
        signUp = () =>{
+
          fetch('http://localhost:3000/users/', {
             method: "POST",
             headers: {
@@ -30,7 +31,9 @@ class SignupPage extends React.Component {
                   password_digest: this.state.userPass,
                   bio: this.state.userBio
         })
-        }).then(resp=>resp.json()).then(data => console.log(data))
+        }).then(resp=>resp.json()).then(data => {
+          localStorage.setItem( "currentUser", data.id )
+          })
       }
       
       

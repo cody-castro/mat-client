@@ -39,20 +39,19 @@ class LoginPage extends React.Component {
   render() {
 
     return(
-       <>
+       <div className="login-div">
          <input type="radio" checked id="toggle--login" name="toggle" class="ghost" />
          <input type="radio" id="toggle--signup" name="toggle" class="ghost" />
 
          <img class="logo framed" src="https://i.imgur.com/uI3sAT1.png" alt="MAT logo" />
         {/* <div className="logo framed"><strong>MAT Logo</strong></div> */}
 
-         <form class="form form--login framed">
-    <input type="email" placeholder="Email" class="input input--top" />
-    <input type="password" placeholder="Password" class="input" />
-    <input type="submit" value="Log in" class="input input--submit" />
-     <a className="signup-link" href="http://localhost:3001/signup/" >New? Sign up</a>
-    
-  </form>
+        <form class="form form--login framed">
+          <input type="email" placeholder="Email" class="input input--top" />
+          <input type="password" placeholder="Password" class="input" />
+          <input type="submit" value="Log in" class="input input--submit" />
+          <a className="signup-link" href="http://localhost:3001/signup/"> New? Sign up </a>
+        </form>
 
   {/* <form class="form form--signup framed">
     <h2 class="text text--centered text--omega">Start reviewing accessibility in NYC now!</h2>
@@ -67,8 +66,8 @@ class LoginPage extends React.Component {
 
 
 
-  <div class="fullscreen-bg"></div>
-       </>
+  <div className="fullscreen-bg"></div>
+       </div >
     )
   }
 }

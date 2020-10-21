@@ -21,7 +21,7 @@ submitForm = (e) =>{
     this.props.submitHandler({
         review: this.state.userReview,
         rating: parseInt(this.state.userRating),
-        user_id: 1,
+        user_id: localStorage.getItem("currentUser"),
         location_id: this.props.stationId
     })
 }

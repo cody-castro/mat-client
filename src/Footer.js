@@ -3,7 +3,9 @@ import React from 'react'
 function Footer(){
 
     return(
-        <h1>Me? I'm just the footer</h1>
+        <div class="footer">
+             <p>My Accessible Transit is not a trademark. Do with that information as you wish.</p>
+        </div>
     )
 }
 

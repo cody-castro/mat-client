@@ -8,12 +8,15 @@ state={
 	userBio: "",
 	editButtonClicked: false, 
 	editName: "",
-	editBio: ""
+	editBio: "",
+	reviews: []
 }
 
 componentDidMount(){
-	fetch("http://localhost:3000/users/").then(resp => resp.json()).then(data => {
-		this.setState((previousState)=>({ userName: data[0].name, userBio: data[0].bio }))
+	let userId = localStorage.getItem("currentUser")
+	fetch("http://localhost:3000/users/" + userId).then(resp => resp.json()).then(data => {
+		this.setState((previousState)=>({ userName: data.name, userBio: data.bio, reviews: data.ratings[0] }))
+
 	})
 }
 
@@ -28,8 +31,8 @@ changeHandler = (e) =>{
 
 submitHandler = (e) =>{
 	e.preventDefault()
-
-	fetch(`http://localhost:3000/users/1`, {
+	let userId = localStorage.getItem("currentUser")
+	fetch(`http://localhost:3000/users/` + userId, {
 	method: 'PATCH',
 	headers: {
 		"Content-Type": "application/json",
@@ -44,19 +47,35 @@ submitHandler = (e) =>{
 })
 }
 
+getReviews = ()=> {
+	// console.log(this.state.reviews)
+	// let reviewArray = this.state.reviews
+    //  return reviewArray.map(r => <li>{r}</li>)
+  }
+
+
+deleteReview = (reviewId)=>{
+	fetch('http://localhost:3000/ratings/' + reviewId, {
+		method: "DELETE",
+		headers: {
+			"Content-Type": "application/json",
+			Accept: "application/json",
+		}
+	})
+}
 
 
 render(){
 	if (this.state.editButtonClicked === true){
 		
 		return(
-			<div>
+			<div className="profile-page">
 
-				<div class= "card-container">
+				<div className= "card-container">
 
-				<span class="pro">Commuter Profile</span>
+				<span className="pro">Commuter Profile</span>
 
-				<img class="round" src="https://i.imgur.com/uI3sAT1.png" height="150px" alt="user" />
+				<img className="round" src="https://i.imgur.com/uI3sAT1.png" height="150px" alt="user" />
 
 				<form onSubmit={(e)=>{this.submitHandler(e)}}>
 					<input value={this.state.editName} name="editName" placeHolder={this.state.userName} onChange={(e)=>{this.changeHandler(e)}}></input>
@@ -68,10 +87,10 @@ render(){
 						</button>
 					</div>
 				</form>
-				<div class="skills">
+				<div className="skills">
 					<h6>Reviews</h6>
 					<ul>
-						{/* <li>{this.state.reviews}</li> */}
+						{/* <li>{this.getReviews()}</li> */}
 					</ul>
 				</div>
 			</div>
@@ -80,29 +99,33 @@ render(){
 			)
 		} else {
 			return(
-				<div>
+				<div className="profile-page">
 
-				<div class= "card-container">
+				<div className= "card-container">
 
-				<span class="pro">Commuter Profile</span>
+				<span className="pro">Commuter Profile</span>
 
 				<img class="round" src="https://i.imgur.com/uI3sAT1.png" height="150px" alt="user" />
 				<h2>{this.state.userName}</h2>
 				<h6>New York</h6>
 				<p>{this.state.userBio}</p>
 				<div class="buttons">
-					<button class="primary" onClick={()=>{ this.setState(()=>({ editButtonClicked: true }))}} >
+					<button className="primary" onClick={()=>{ this.setState(()=>({ editButtonClicked: true }))}} >
 						Edit Profile
 					</button>
 				</div>
 				<div class="skills">
 					<h6>Reviews</h6>
 					<ul>
-						{/* <li>{this.state.reviews}</li> */}
+					{/* { this.getReviews() } */}
+						<li>
+							{this.state.reviews.review}
+			<button style={{color: "red", background: "transparent", border:"transparent"}} alt="delete review"  /*({this.state.reviews.review.id})=>{this.deleteReview(this.state.reviews.review.id)}}*/>x</button>
+						</li>
 					</ul>
 				</div>
 			</div>
-
+			<div className="background"></div>
 					</div>
 			)
 		}

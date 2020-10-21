@@ -2,3 +2,17 @@ a{
     width: 25px;
     height: 14px;
 }
+
+.map-card{
+    height: 150px;
+    background-color: blue;
+    width: 100vw;
+}
+
+/* .marker{
+    z-index: -90;
+}
+
+img{
+    z-index: -90;
+} */
